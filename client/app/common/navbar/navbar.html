@@ -1,8 +1,19 @@
-<nav class="navbar">
-  <div class="logo">
-    <h1><a ui-sref="home">{{ $ctrl.name }}</a></h1>
-  </div>
-  <div class="nav-links">
-    <span><a ui-sref="about">about</a></span>
-  </div>
-</nav>
+<!-- TOOLBAR / HEADER -->
+<md-toolbar layout="row" class="md-toolbar-tools">
+    <!-- TOP TOOLBAR -->
+    <md-button class="md-fab"  aria-label="SideNavigation">
+      <md-icon md-font-set="material-icons">menu</md-icon>
+    </md-button>
+    <!-- Left side -->
+    <md-button class="square" aria-label="Home" ui-sref="home">
+        <div class="site-title"> {{::$ctrl.SITENAME}} </div>
+    </md-button>
+
+    <span flex><!-- MAKE RIGHT-ALIGNED --></span>
+
+    <!-- <md-button  class="square" aria-label="cifar10" ui-sref="cifar10" md-position-mode="target-right target">
+        <md-icon md-font-set="material-icons">code</md-icon>CIFAR10
+        <md-tooltip md-direction="down">CIFAR10 example</md-tooltip>
+    </md-button> -->
+
+</md-toolbar>

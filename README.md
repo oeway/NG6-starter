@@ -1,3 +1,141 @@
+# NG6-starter简化版
+
+# 快速使用入门
+
+## 安装
+* `git clone` 克隆这个git repo.
+* 在这个文件夹下面运行 `npm install`
+
+## 使用
+### 第一步 构建
+* `npm run build`
+  * runs Webpack, which will transpile, concatenate, and compress (collectively, "bundle") all assets and modules into `dist/bundle.js`. It also prepares `index.html` to be used as application entry point, links assets and created dist version of our application.
+### 第二步 运行并监视修改
+运行 `npm run watch`
+
+### 第三步 打开浏览器
+测试网页: http://localhost:3000 ，看到测试页面后，可以直接打开编辑器修改代码，保存后页面会自动更新。
+
+另外这个工具包包含另外一个测试工具[browsersync](http://www.browsersync.cn/).
+可以在这里看browsersync的页面: http://localhost:3002
+
+## 如何添加子页面？
+
+### 第一步 按照模板添加一个component
+假设取名为 cifar10, 运行下面命令：
+ `npm run component -- --name cifar10`
+ 检查 client/app/components 文件夹，应该会多一个文件名为cifar10的文件夹。
+
+ 具有如下文件结构：
+ ```
+⋅⋅⋅⋅⋅⋅cifar10/
+⋅⋅⋅⋅⋅⋅⋅⋅cifar10.js // controller、component和module的定义文件
+⋅⋅⋅⋅⋅⋅⋅⋅cifar10.html // 网页模板文件
+⋅⋅⋅⋅⋅⋅⋅⋅cifar10.scss // scss样式定义
+⋅⋅⋅⋅⋅⋅⋅⋅cifar10.spec.js // 测试文件，用于后期单元测试
+```
+
+这样就会创建一个新的component和模块。
+
+### 第二步 添加模块
+打开文件client/app/components/components.js, 与`Home`类似，在文件头添加`import Cifar10 from './cifar10/cifar10';`, 在`componentModule`中添加依赖`Cifar10`, 添加后的components.js文件如下：
+```
+import angular from 'angular';
+import Home from './home/home';
+import Cifar10 from './cifar10/cifar10';
+
+let componentModule = angular.module('app.components', [
+  Home,
+  Cifar10
+])
+
+.name;
+
+export default componentModule;
+```
+### 第三步 修改html和js
+运行 `npm run watch` 并保持窗口打开。
+
+开发过程中，在`cifar10.html`中添加需要的html内容，并在`cifar10.js`中修改Cifar10Controller这个class。
+例如，在`cifar10.html`中，添加一个按钮：
+```
+<md-button class="square" aria-label="test button" ng-click="$ctrl.sayHello()">
+    Hello {{$ctrl.buttonText}}
+</md-button>
+```
+P.S.:在angular material的官网有很多控件的例子可以参考如何写界面：https://material.angularjs.org/latest/demo/button
+这个例子里涉及到一个叫`$ctrl.buttonText` 的变量和一个叫`$ctrl.sayHello()` 的函数，我们可以在`Cifar10Controller`这个class中定义和修改它们。例如打开文件`cifar10.js`,可以修改`Cifar10Controller`为：
+
+```
+//controller
+export class Cifar10Controller {
+    constructor() {
+      this.buttonText = 'world';
+    }
+    sayHello(){
+        alert('hello world');
+        //change 'world' to '!'
+        this.buttonText = '!';
+    }
+}
+```
+保存后即可看到按钮， 注意这里面函数式如何定义的，变量是如何被修改的。
+
+### 第四步（可选）设置url
+
+打开 `cifar10.js` 文件，取消下面代码的注释然后保存：
+```
+.config(($stateProvider, $urlRouterProvider) => {
+  "ngInject";
+  $stateProvider
+    .state('cifar10', {
+      url: '/cifar10',
+      component: 'cifar10'
+    });
+})
+```
+这里定义了一个叫做`cifar10`的状态并分配到`/cifar10`这个url上面。
+这样你就可以通过http://localhost:3000/cifar10 看到这个子页面了。
+
+#### 如何在一个导航条上添加一个按钮跳转到这个cifar10的页面？
+打开client/app/common/navbar/navbar.html, 添加一个按钮：
+```
+<md-button class="square" ui-sref="cifar10">
+    CIFAR10
+</md-button>
+```
+最关键的部分是`ui-sref="cifar10"`这个属性，这样点击这个按钮后就会跳转。
+
+## 如何添加多个页面共用的component？
+假设我们要添加一个网页的脚注取名为footer.
+与添加子页面类似，运行：`npm run component -- --name footer --parent ../common`
+这样在client/app/common文件夹下面会生成一个新的叫footer的文件夹。
+
+因为不需要给一个独立的组件分配url，所以不需要打开url相关的注释。
+
+类似地，打开client/app/common/common.js，修改两处将footer导入进来并添加到模块的依赖中，修改后的common.js应该为：
+```
+import angular from 'angular';
+import Navbar from './navbar/navbar';
+import Footer from './footer/footer';
+
+let commonModule = angular.module('app.common', [
+  Navbar,
+  Footer
+])
+
+.name;
+
+export default commonModule;
+```
+
+这样，在其他子页面中，就可以直接使用一个叫做footer的tag, 比如，可以在client/app/components/home/home.html中加入以下内容：
+```
+<footer> </footer>
+```
+
+# 原版说明
+
 <p align="center">
   <a href="http://courses.angularclass.com/courses/angular-2-fundamentals" target="_blank">
     <img width="438" alt="Angular 2 Fundamentals" src="https://cloud.githubusercontent.com/assets/1016365/17200649/085798c6-543c-11e6-8ad0-2484f0641624.png">
@@ -66,12 +204,12 @@ NG6 uses NPM scripts, Gulp, and Webpack together for its build system. Yes, you 
 **Check out the [JSPM version](https://github.com/angularclass/NG6-starter/tree/jspm)--an alternative to Webpack as an ES6 build system.**
 
 ## File Structure
-We use a componentized approach with NG6. This will be the eventual standard (and particularly helpful, if using 
-Angular's new router) as well as a great way to ensure a tasteful transition to Angular 2, when the time is ripe. 
-Everything--or mostly everything, as we'll explore (below)--is a component. A component is a self-contained 
-concern--may it be a feature or strictly-defined, ever-present element of the UI (such as a header, sidebar, or 
-footer). Also characteristic of a component is that it harnesses its own stylesheets, templates, controllers, routes, 
-services, and specs. This encapsulation allows us the comfort of isolation and structural locality. Here's how it 
+We use a componentized approach with NG6. This will be the eventual standard (and particularly helpful, if using
+Angular's new router) as well as a great way to ensure a tasteful transition to Angular 2, when the time is ripe.
+Everything--or mostly everything, as we'll explore (below)--is a component. A component is a self-contained
+concern--may it be a feature or strictly-defined, ever-present element of the UI (such as a header, sidebar, or
+footer). Also characteristic of a component is that it harnesses its own stylesheets, templates, controllers, routes,
+services, and specs. This encapsulation allows us the comfort of isolation and structural locality. Here's how it
 looks:
 ```
 client
@@ -111,7 +249,7 @@ Tools needed to run this app:
 
 ## Running the App
 NG6 uses Gulp to build and launch the development environment. After you have installed all dependencies, you may run the app. Running `npm start` will bundle the app with `webpack`, launch a development server, and watch all files. The port will be displayed in the terminal.
- 
+
 ### Tasks
 Here's a list of available tasks:
 * `npm run build`
@@ -124,7 +262,7 @@ Here's a list of available tasks:
   * runs `serve`.
 * `npm run component`
   * scaffolds a new Angular component. [Read below](#generating-components) for usage details.
-  
+
 ### Testing
 To run the tests, run `npm test`.
 
@@ -172,7 +310,7 @@ Because the argument to `--name` applies to the folder name **and** the actual c
 
 ___
 
-enjoy — **AngularClass** 
+enjoy — **AngularClass**
 
 <br><br>
 

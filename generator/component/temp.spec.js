@@ -1,6 +1,6 @@
-import <%= upCaseName %>Module from './<%= name %>'
-import <%= upCaseName %>Controller from './<%= name %>.controller';
-import <%= upCaseName %>Component from './<%= name %>.component';
+import <%= upCaseName %>Module from './<%= name %>';
+import <%= upCaseName %>Controller from './<%= name %>';
+import <%= upCaseName %>Component from './<%= name %>';
 import <%= upCaseName %>Template from './<%= name %>.html';
 
 describe('<%= upCaseName %>', () => {
