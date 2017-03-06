@@ -5,6 +5,7 @@ import './<%= name %>.scss';
 
 // controller
 export class <%= upCaseName %>Controller {
+  'ngInject';
   constructor() {
     this.name = '<%= name %>';
   }
