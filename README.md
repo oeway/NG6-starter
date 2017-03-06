@@ -66,6 +66,7 @@ P.S.:在angular material的官网有很多控件的例子可以参考如何写�
 ```
 //controller
 export class Cifar10Controller {
+    'ngInject';
     constructor() {
       this.buttonText = 'world';
     }
