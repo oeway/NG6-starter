@@ -8,25 +8,24 @@
 
 ## 使用
 ### 第一步 构建
-* `npm run build`
-  * runs Webpack, which will transpile, concatenate, and compress (collectively, "bundle") all assets and modules into `dist/bundle.js`. It also prepares `index.html` to be used as application entry point, links assets and created dist version of our application.
+运行 `npm run build`
+
 ### 第二步 运行并监视修改
 运行 `npm run watch`
 
 ### 第三步 打开浏览器
 测试网页: http://localhost:3000 ，看到测试页面后，可以直接打开编辑器修改代码，保存后页面会自动更新。
 
-另外这个工具包包含另外一个测试工具[browsersync](http://www.browsersync.cn/).
-可以在这里看browsersync的页面: http://localhost:3002
+另外这个工具包包含另外一个测试工具[browsersync](http://www.browsersync.cn/)， 可以在这里看browsersync的页面: http://localhost:3002
 
 ## 如何添加子页面？
 
 ### 第一步 按照模板添加一个component
-假设取名为 cifar10, 运行下面命令：
+假设component名为 `cifar10`, 运行下面命令：
  `npm run component -- --name cifar10`
- 检查 client/app/components 文件夹，应该会多一个文件名为cifar10的文件夹。
+ 检查 `client/app/components` 文件夹，应该会多一个名为`cifar10`的文件夹。
 
- 具有如下文件结构：
+ 具有如下目录结构：
  ```
 ⋅⋅⋅⋅⋅⋅cifar10/
 ⋅⋅⋅⋅⋅⋅⋅⋅cifar10.js // controller、component和module的定义文件
@@ -35,10 +34,8 @@
 ⋅⋅⋅⋅⋅⋅⋅⋅cifar10.spec.js // 测试文件，用于后期单元测试
 ```
 
-这样就会创建一个新的component和模块。
-
 ### 第二步 添加模块
-打开文件client/app/components/components.js, 与`Home`类似，在文件头添加`import Cifar10 from './cifar10/cifar10';`, 在`componentModule`中添加依赖`Cifar10`, 添加后的components.js文件如下：
+打开文件`client/app/components/components.js`, 与`Home`类似，在文件头添加`import Cifar10 from './cifar10/cifar10';`, 在`componentModule`中添加依赖`Cifar10`, 添加后的`components.js`文件如下：
 ```
 import angular from 'angular';
 import Home from './home/home';
@@ -56,7 +53,7 @@ export default componentModule;
 ### 第三步 修改html和js
 运行 `npm run watch` 并保持窗口打开。
 
-开发过程中，在`cifar10.html`中添加需要的html内容，并在`cifar10.js`中修改Cifar10Controller这个class。
+开发过程中，在`cifar10.html`中添加需要的html内容，并在`cifar10.js`中修改`Cifar10Controller`这个class。
 例如，在`cifar10.html`中，添加一个按钮：
 ```
 <md-button class="square" aria-label="test button" ng-click="$ctrl.sayHello()">
@@ -98,7 +95,7 @@ export class Cifar10Controller {
 这样你就可以通过http://localhost:3000/cifar10 看到这个子页面了。
 
 #### 如何在一个导航条上添加一个按钮跳转到这个cifar10的页面？
-打开client/app/common/navbar/navbar.html, 添加一个按钮：
+打开`client/app/common/navbar/navbar.html`, 添加一个按钮：
 ```
 <md-button class="square" ui-sref="cifar10">
     CIFAR10
@@ -107,13 +104,13 @@ export class Cifar10Controller {
 最关键的部分是`ui-sref="cifar10"`这个属性，这样点击这个按钮后就会跳转。
 
 ## 如何添加多个页面共用的component？
-假设我们要添加一个网页的脚注取名为footer.
+假设我们要添加一个网页的脚注取名为`footer`.
 与添加子页面类似，运行：`npm run component -- --name footer --parent ../common`
-这样在client/app/common文件夹下面会生成一个新的叫footer的文件夹。
+这样在`client/app/common`文件夹下面会生成一个新的叫`footer`的文件夹。
 
 因为不需要给一个独立的组件分配url，所以不需要打开url相关的注释。
 
-类似地，打开client/app/common/common.js，修改两处将footer导入进来并添加到模块的依赖中，修改后的common.js应该为：
+类似地，打开`client/app/common/common.js`，修改两处将`footer`导入进来并添加到模块的依赖中，修改后的`common.js`应该为：
 ```
 import angular from 'angular';
 import Navbar from './navbar/navbar';
@@ -129,10 +126,17 @@ let commonModule = angular.module('app.common', [
 export default commonModule;
 ```
 
-这样，在其他子页面中，就可以直接使用一个叫做footer的tag, 比如，可以在client/app/components/home/home.html中加入以下内容：
+这样，在其他子页面中，就可以直接使用一个叫做`footer`的tag, 比如，可以在`client/app/components/home/home.html`中加入以下内容：
 ```
 <footer> </footer>
 ```
+
+## 其他信息
+
+Angular Material的例子： https://material.angularjs.org/latest/demo/button
+侧边导航条： https://material.angularjs.org/latest/demo/sidenav
+Google的图标： https://material.io/icons/
+如何debug：可以使用chrome浏览器自带的开发工具，网页出现问题，一般可以在开发工具的console查看中输出的错误信息，具体使用方法Google搜索。
 
 # 原版说明
 
