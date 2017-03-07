@@ -5,6 +5,8 @@
 ## 安装
 * `git clone` 克隆这个git repo.
 * 在这个文件夹下面运行 `npm install`
+* 安装bower `npm install bower -g`
+* 运行`bower install`
 
 ## 使用
 ### 第一步 构建
@@ -133,11 +135,11 @@ export default commonModule;
 ```
 
 ## 其他信息
-
-Angular Material的例子： https://material.angularjs.org/latest/demo/button
-侧边导航条： https://material.angularjs.org/latest/demo/sidenav
-Google的图标： https://material.io/icons/
-如何debug：可以使用chrome浏览器自带的开发工具，网页出现问题，一般可以在开发工具的console查看中输出的错误信息，具体使用方法Google搜索。
+* 用`client/app/public`文件夹放非组件形式的js和css文件。
+* Angular Material的例子： https://material.angularjs.org/latest/demo/button
+* 侧边导航条： https://material.angularjs.org/latest/demo/sidenav
+* Google的图标： https://material.io/icons/, 安装：https://google.github.io/material-design-icons/
+* 如何debug：可以使用chrome浏览器自带的开发工具，网页出现问题，一般可以在开发工具的console查看中输出的错误信息，具体使用方法Google搜索。
 
 # 原版说明
 
